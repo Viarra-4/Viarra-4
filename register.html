@@ -82,9 +82,9 @@
       localStorage.setItem("username", username);
 
       try {
-        const response = await fetch("http://localhost:3000/send-code", {
+     const response = await fetch("https://viarra-server.onrender.com/send-code", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {  "Content-Type": "application/json" },
           body: JSON.stringify({ phone })
         });
 
