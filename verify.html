@@ -44,6 +44,9 @@
     .btn:hover {
       background: #3b8ae0;
     }
+    #passwordSection {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -52,12 +55,18 @@
       <h2>تأكيد رقم الجوال</h2>
       <input type="text" id="code" placeholder="أدخل الكود المرسل إليك" />
       <button class="btn" onclick="verifyCode()">تأكيد</button>
+
+      <div id="passwordSection">
+        <h3>إنشاء كلمة المرور</h3>
+        <input type="password" id="password" placeholder="اكتب كلمة المرور" />
+        <button class="btn" onclick="createAccount()">إنشاء الحساب</button>
+      </div>
     </div>
   </section>
 
   <script>
     async function verifyCode() {
-      const phone = localStorage.getItem("userPhone"); // الرقم اللي حفظناه في صفحة التسجيل
+      const phone = localStorage.getItem("userPhone");
       const code = document.getElementById("code").value.trim();
 
       if (!code) {
@@ -69,20 +78,38 @@
         const response = await fetch("http://localhost:3000/verify-code", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ phone, code })
+          body: JSON.stringify({ phone, code }),
         });
 
         const data = await response.json();
 
         if (data.success) {
-          alert("✅ تم تأكيد الحساب بنجاح!");
-          window.location.href = "shops.html";
+          alert("✅ الكود صحيح! الآن أنشئ كلمة المرور الخاصة بك.");
+          document.getElementById("passwordSection").style.display = "block";
         } else {
           alert("❌ الكود غير صحيح أو منتهي الصلاحية.");
         }
       } catch (error) {
         alert("⚠️ فشل الاتصال بالسيرفر.");
       }
+    }
+
+    function createAccount() {
+      const password = document.getElementById("password").value.trim();
+      if (!password) {
+        alert("⚠️ الرجاء إدخال كلمة المرور.");
+        return;
+      }
+
+      const username = localStorage.getItem("username");
+      const phone = localStorage.getItem("userPhone");
+
+      // نحفظ كل البيانات
+      localStorage.setItem("password", password);
+      localStorage.setItem("isLoggedIn", "true");
+
+      alert("🎉 تم إنشاء الحساب بنجاح! سيتم نقلك إلى المتجر الآن 🚀");
+      window.location.href = "shops.html";
     }
   </script>
 </body>

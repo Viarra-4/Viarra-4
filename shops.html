@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Viarra — المتاجر</title>
   <link rel="stylesheet" href="style.css" />
+
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(180deg, #eaf6ff, #f7fbff);
+      background: linear-gradient(180deg, #eaf6ff, #ffffff);
       color: #13324b;
     }
 
     header {
-      background: rgba(255,255,255,0.9);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
       padding: 15px 25px;
       display: flex;
       align-items: center;
@@ -24,167 +25,148 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      flex-wrap: wrap;
     }
 
     .logo {
-      font-size: 1.5em;
+      font-size: 1.6em;
       font-weight: bold;
       color: #13324b;
+      text-align: center;
+      width: 100%;
+    }
+
+    .welcome-text {
+      font-size: 15px;
+      color: #4da3ff;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 4px;
+      width: 100%;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      width: 100%;
+      margin-top: 8px;
     }
 
     nav a {
-      margin: 0 10px;
       color: #13324b;
       text-decoration: none;
       font-weight: 500;
-    }
-
-    nav a:hover {
-      color: #4ba3f2;
-    }
-
-    .menu-icon {
-      font-size: 26px;
-      cursor: pointer;
-      color: #13324b;
-      user-select: none;
-    }
-
-    .categories {
-      display: none;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      position: absolute;
-      top: 70px;
-      right: 20px;
-      border-radius: 12px;
-      padding: 10px 20px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .categories.active {
-      display: block;
-    }
-
-    .categories a {
-      display: block;
-      color: #13324b;
-      padding: 8px 0;
-      text-decoration: none;
-      transition: 0.2s;
-      font-weight: 500;
-    }
-
-    .categories a:hover {
-      color: #4ba3f2;
-    }
-
-    .intro-text {
-      text-align: center;
-      font-size: 1.3em;
-      margin-top: 35px;
-      color: #1a3b58;
-      font-weight: 500;
-    }
-
-    .search-bar {
-      text-align: center;
-      margin: 25px 0 40px;
-    }
-
-    .search-bar input {
-      width: 60%;
-      max-width: 400px;
-      padding: 10px 15px;
-      border-radius: 20px;
-      border: 1px solid #bcd3e8;
-      background: rgba(255,255,255,0.8);
-      font-size: 15px;
       transition: 0.3s;
     }
 
-    .search-bar input:focus {
-      outline: none;
-      border-color: #4ba3f2;
-      box-shadow: 0 0 8px rgba(75,163,242,0.3);
+    nav a:hover {
+      color: #4da3ff;
     }
 
-    h2 {
+    .categories {
       text-align: center;
-      margin: 20px 0;
-      color: #13324b;
-      font-size: 1.6em;
+      margin: 40px 0 20px;
     }
 
-    .shops-container {
+    .categories a {
+      margin: 0 8px;
+      color: #13324b;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid #9fcbe8;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .categories a:hover {
+      background: #9fcbe8;
+      color: white;
+    }
+
+    .shops {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 25px;
-      padding: 0 50px 80px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 30px;
     }
 
     .shop-card {
-      background: rgba(255,255,255,0.75);
-      border-radius: 18px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      background: #f7fbff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       text-align: center;
-      padding: 25px 15px;
-      backdrop-filter: blur(6px);
-      transition: 0.3s ease;
-      border-top: 4px solid transparent;
+      padding: 20px;
+      transition: transform 0.3s;
     }
 
     .shop-card:hover {
-      transform: translateY(-6px);
-      border-top: 4px solid #4ba3f2;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transform: translateY(-5px);
     }
 
     .shop-card img {
-      width: 90px;
-      height: 90px;
+      max-width: 100%;
+      height: 70px;
       object-fit: contain;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .shop-card h3 {
-      margin-bottom: 8px;
-      font-size: 1.1em;
+      margin: 10px 0;
+      font-size: 18px;
       color: #13324b;
     }
 
     .shop-card a {
-      color: #4ba3f2;
+      display: inline-block;
+      margin-top: 8px;
+      background: #4da3ff;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
       text-decoration: none;
-      font-weight: bold;
+      transition: 0.3s;
     }
 
-    footer {
-      text-align: center;
-      color: #6b7b86;
-      padding: 25px;
-      font-size: 0.9em;
-      background: rgba(255,255,255,0.6);
-      border-top: 1px solid #d7e5f3;
+    .shop-card a:hover {
+      background: #3b8ae0;
+    }
+
+    input[type="text"] {
+      display: block;
+      margin: 20px auto;
+      padding: 10px;
+      width: 80%;
+      max-width: 300px;
+      border: 1px solid #9fcbe8;
+      border-radius: 6px;
+      font-size: 15px;
     }
 
     @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(-10px);}
-      to {opacity: 1; transform: translateY(0);}
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
+
 <body>
+  <!-- ===== الهيدر ===== -->
   <header>
     <div class="logo">Viarra</div>
+    <div class="welcome-text" id="welcome"></div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <div class="menu-icon" id="menuBtn">☰</div>
   </header>
+
+  <!-- ===== البحث والفئات ===== -->
+  <input type="text" id="cityInput" placeholder="ابحث باسم المدينة..." />
 
   <div class="categories" id="categoriesMenu">
     <a href="#" data-category="all">عرض الكل</a>
@@ -194,53 +176,29 @@
     <a href="#" data-category="accessories">إكسسوارات</a>
   </div>
 
-  <div class="intro-text">فيارا تجمع كل المتاجر لك</div>
-
-  <div class="search-bar">
-    <input type="text" id="cityInput" placeholder="ابحث باسم المدينة (مثال: الرياض)" />
-  </div>
-
-  <h2>جميع المتاجر</h2>
-
-  <main class="shops-container" id="shopsContainer"></main>
-
-  <footer>
-    <p>© 2025 Viarra — جميع الحقوق محفوظة / All rights reserved.</p>
-  </footer>
+  <!-- ===== المتاجر ===== -->
+  <div class="shops" id="shopsContainer"></div>
 
   <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const categoriesMenu = document.getElementById("categoriesMenu");
     const shopsContainer = document.getElementById("shopsContainer");
     const cityInput = document.getElementById("cityInput");
+    const categoriesMenu = document.getElementById("categoriesMenu");
 
-    menuBtn.addEventListener("click", () => {
-      categoriesMenu.classList.toggle("active");
-    });
-
-    const shops = [
-      // ملابس
-      { name: "ZARA", img: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Zara_Logo.svg", category: "clothes", city: ["الرياض","جدة","تبوك"], link: "https://www.zara.com" },
-      { name: "H&M", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/H_M-Logo.svg", category: "clothes", city: ["الرياض","مكة","الدمام"], link: "https://www.hm.com" },
-      { name: "Bershka", img: "https://upload.wikimedia.org/wikipedia/commons/3/30/Bershka_logo.svg", category: "clothes", city: ["الرياض","المدينة","أبها"], link: "https://www.bershka.com" },
-      { name: "Mango", img: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Mango_logo.svg", category: "clothes", city: ["الرياض","تبوك"], link: "https://shop.mango.com" },
-      { name: "Pull & Bear", img: "https://upload.wikimedia.org/wikipedia/commons/3/32/Pull_%26_Bear_logo.svg", category: "clothes", city: ["جدة","الرياض"], link: "https://www.pullandbear.com" },
-      // عطور
-      { name: "Dior", img: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Dior_Logo.svg", category: "perfume", city: ["جدة","الرياض","مكة"], link: "https://www.dior.com" },
-      { name: "Chanel", img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Chanel_logo_interlocking_cs.svg", category: "perfume", city: ["الرياض","الدمام"], link: "https://www.chanel.com" },
-      { name: "YSL", img: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Yves_Saint_Laurent_Logo.svg", category: "perfume", city: ["الرياض","الخبر"], link: "https://www.ysl.com" },
-      { name: "العربية للعود", img: "https://cdn.worldvectorlogo.com/logos/arabian-oud.svg", category: "perfume", city: ["الرياض","جدة","الدمام","تبوك"], link: "https://www.arabianoud.com" },
-      { name: "وجوه", img: "https://upload.wikimedia.org/wikipedia/commons/e/eb/%D9%88%D8%AC%D9%88%D9%87.png", category: "perfume", city: ["الرياض","مكة","المدينة"], link: "https://www.faces.com/sa-ar" },
-      // شنط
-      { name: "Louis Vuitton", img: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Louis_Vuitton_logo_and_wordmark.svg", category: "bags", city: ["جدة","الرياض"], link: "https://www.louisvuitton.com" },
-      { name: "Coach", img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Coach_New_York_logo.svg", category: "bags", city: ["الرياض","الدمام"], link: "https://www.coach.com" },
-      { name: "Michael Kors", img: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Michael_Kors_logo.svg", category: "bags", city: ["الرياض","المدينة"], link: "https://www.michaelkors.com" },
-      { name: "Dior Bags", img: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Dior_Logo.svg", category: "bags", city: ["الرياض","جدة"], link: "https://www.dior.com" },
-      // إكسسوارات
-      { name: "Pandora", img: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Pandora_logo.svg", category: "accessories", city: ["الرياض","مكة","الدمام"], link: "https://sa.pandora.net" },
+    const shops = [{ name: "Dior", img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Dior_Logo.svg", category: "clothes", city: ["جدة","الرياض"], link: "https://www.dior.com" },
+      { name: "Chanel", img: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Chanel_logo_interlocking_cs.svg", category: "perfume", city: ["الرياض","الدمام"], link: "https://www.chanel.com" },
+      { name: "ZARA", img: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Zara_Logo.svg", category: "clothes", city: ["جدة","الرياض"], link: "https://www.zara.com" },
+      { name: "Gucci", img: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Gucci_logo.svg", category: "bags", city: ["الرياض"], link: "https://www.gucci.com" },
       { name: "Swarovski", img: "https://upload.wikimedia.org/wikipedia/commons/b/bf/Swarovski_logo.svg", category: "accessories", city: ["جدة","الرياض"], link: "https://www.swarovski.com" },
       { name: "Cartier", img: "https://upload.wikimedia.org/wikipedia/commons/3/31/Cartier_logo.svg", category: "accessories", city: ["الرياض","المدينة"], link: "https://www.cartier.com" },
       { name: "Tiffany & Co", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Tiffany_%26_Co._logo.svg", category: "accessories", city: ["الرياض","الخبر"], link: "https://www.tiffany.com" },
+
+      /* ===== متاجر تبوك ===== */
+      { name: "Rina", img: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Rina_Fashion_logo.svg", category: "clothes", city: ["تبوك"], link: "https://www.rinafashion.com" },
+      { name: "Faces", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Faces_Beauty_Stores_logo.svg", category: "perfume", city: ["تبوك"], link: "https://www.faces.com" },
+      { name: "Splash", img: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Splash_Fashions_logo.svg", category: "clothes", city: ["تبوك"], link: "https://www.splashfashions.com" },
+      { name: "Lifestyle", img: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Lifestyle_logo.svg", category: "accessories", city: ["تبوك"], link: "https://www.lifestyleshops.com" },
+      { name: "Jarir Bookstore", img: "https://upload.wikimedia.org/wikipedia/en/b/b2/Jarir_Bookstore_logo.svg", category: "accessories", city: ["تبوك"], link: "https://www.jarir.com" },
+      { name: "Centrepoint", img: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Centrepoint_logo.svg", category: "clothes", city: ["تبوك"], link: "https://www.centrepointstores.com" }
     ];
 
     function renderShops(list) {
@@ -249,7 +207,7 @@
         const card = document.createElement("div");
         card.classList.add("shop-card");
         card.innerHTML = `
-          <img src="${shop.img}" alt="${shop.name}">
+          <img src="${shop.img}" alt="${shop.name}" onerror="this.style.display='none'">
           <h3>${shop.name}</h3>
           <a href="${shop.link}" target="_blank">زيارة المتجر</a>
         `;
@@ -278,6 +236,16 @@
         categoriesMenu.classList.remove("active");
       });
     });
+
+    // ===== الترحيب بالمستخدم =====
+    const username = localStorage.getItem("username");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (!isLoggedIn) {
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("welcome").textContent =' مرحبًا بك  ${username} 🌸';
+    }
   </script>
 </body>
 </html>
