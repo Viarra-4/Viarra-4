@@ -147,6 +147,12 @@
 </head>
 
 <body>
+  <script>
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  if (isLoggedIn !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
   <header>
     <div>
       <div class="logo">Viarra</div>

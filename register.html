@@ -77,6 +77,7 @@
         phone = "+966" + phone.replace(/^0/, "");
       }
 
+      // نحفظ بيانات المستخدم مؤقتًا بالجهاز
       localStorage.setItem("userPhone", phone);
       localStorage.setItem("username", username);
 
@@ -87,11 +88,13 @@
           body: JSON.stringify({ phone })
         });
 
-        if (response.ok) {
+        const data = await response.json();
+
+        if (data.success) {
           alert("📩 تم إرسال الكود إلى رقمك!");
           window.location.href = "verify.html";
         } else {
-          alert("❌ حدث خطأ أثناء إرسال الكود، تأكد من الرقم.");
+          alert("❌ فشل إرسال الكود، حاول مرة أخرى.");
         }
       } catch (error) {
         alert("⚠️ فشل الاتصال بالسيرفر، تأكد أنه يعمل.");
