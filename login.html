@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تسجيل الدخول - Viarra</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="login-page">
+    <h2>تسجيل الدخول</h2>
+    <form id="loginForm">
+      <label>اسم المستخدم</label>
+      <input type="text" required />
+
+      <label>رقم الجوال</label>
+      <input type="tel" required />
+
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+    <p>ليس لديك حساب؟ <a href="register.html">إنشاء حساب</a></p>
+  </section>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      // بعد تسجيل الدخول ينتقل تلقائيًا إلى صفحة المتاجر
+      window.location.href = "shops.html";
+    });
+  </script>
+</body>
+</html>

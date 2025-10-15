@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تأكيد الحساب — Viarra</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: url("bg-viarra.png") center/cover no-repeat;
+      color: #fff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      width: 320px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .btn {
+      padding: 10px 25px;
+      background: #4da3ff;
+      color: white;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background: #3b8ae0;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="form-box">
+      <h2>تأكيد رقم الجوال</h2>
+      <input type="text" id="code" placeholder="أدخل الكود المرسل إليك" />
+      <button class="btn" onclick="verifyCode()">تأكيد</button>
+    </div>
+  </section>
+
+  <script>
+    async function verifyCode() {
+      const phone = localStorage.getItem("userPhone"); // الرقم اللي حفظناه في صفحة التسجيل
+      const code = document.getElementById("code").value.trim();
+
+      if (!code) {
+        alert("⚠️ الرجاء إدخال الكود للتحقق.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3000/verify-code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone, code })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          alert("✅ تم تأكيد الحساب بنجاح!");
+          window.location.href = "shops.html";
+        } else {
+          alert("❌ الكود غير صحيح أو منتهي الصلاحية.");
+        }
+      } catch (error) {
+        alert("⚠️ فشل الاتصال بالسيرفر.");
+      }
+    }
+  </script>
+</body>
+</html>

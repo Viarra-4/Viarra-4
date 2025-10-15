@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>إنشاء حساب — Viarra</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: url("bg-viarra.png") center/cover no-repeat;
+      color: #fff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      width: 320px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .btn {
+      padding: 10px 25px;
+      background: #4da3ff;
+      color: white;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background: #3b8ae0;
+    }
+    .small {
+      font-size: 13px;
+      margin-top: 10px;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="form-box">
+      <h2>إنشاء حساب جديد</h2>
+      <input type="text" id="username" placeholder="اسم المستخدم" />
+      <input type="text" id="phone" placeholder="رقم الجوال (مثل 0500000000)" />
+      <button class="btn" onclick="sendCode()">إرسال الكود</button>
+      <p class="small">هل لديك حساب؟ <a href="login.html">تسجيل دخول</a></p>
+    </div>
+  </section>
+
+  <script>
+    async function sendCode() {
+      let phone = document.getElementById("phone").value.trim();
+      const username = document.getElementById("username").value.trim();
+
+      if (!username || !phone) {
+        alert("⚠️ الرجاء إدخال الاسم ورقم الجوال أولاً.");
+        return;
+      }
+
+      // يضيف +966 تلقائيًا إذا الرقم يبدأ بـ0
+      if (!phone.startsWith("+")) {
+        phone = "+966" + phone.replace(/^0/, "");
+      }
+
+      localStorage.setItem("userPhone", phone);
+      localStorage.setItem("username", username);
+
+      try {
+        const response = await fetch("http://localhost:3000/send-code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone })
+        });
+
+        if (response.ok) {
+          alert("📩 تم إرسال الكود إلى رقمك!");
+          window.location.href = "verify.html";
+        } else {
+          alert("❌ حدث خطأ أثناء إرسال الكود، تأكد من الرقم.");
+        }
+      } catch (error) {
+        alert("⚠️ فشل الاتصال بالسيرفر، تأكد أنه يعمل.");
+      }
+    }
+  </script>
+</body>
+</html>
