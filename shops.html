@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Viarra — المتاجر</title>
   <link rel="stylesheet" href="style.css" />
-
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(180deg, #eaf6ff, #ffffff);
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #eaf6ff, #f7fbff);
       color: #13324b;
     }
 
@@ -25,59 +24,76 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      flex-wrap: wrap;
     }
 
     .logo {
-      font-size: 1.6em;
+      font-size: 1.5em;
       font-weight: bold;
       color: #13324b;
-      text-align: center;
-      width: 100%;
     }
 
     .welcome-text {
-      font-size: 15px;
       color: #4da3ff;
-      font-weight: 500;
-      text-align: center;
-      margin-top: 4px;
-      width: 100%;
-      animation: fadeIn 1.2s ease-in-out;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      width: 100%;
-      margin-top: 8px;
+      font-size: 15px;
+      margin-top: 6px;
     }
 
     nav a {
+      margin: 0 10px;
       color: #13324b;
       text-decoration: none;
       font-weight: 500;
-      transition: 0.3s;
     }
 
     nav a:hover {
       color: #4da3ff;
     }
 
-    .categories {
+    .search-box {
       text-align: center;
-      margin: 40px 0 20px;
+      margin: 30px 0 10px;
+    }
+
+    .search-box input {
+      width: 300px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    /* زر التصنيفات */
+    .menu-icon {
+      font-size: 18px;
+      cursor: pointer;
+      background: #9fcbe8;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      display: inline-block;
+      margin: 10px auto;
+    }
+
+    /* القائمة المنسدلة */
+    .categories {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .categories.active {
+      display: flex;
     }
 
     .categories a {
-      margin: 0 8px;
+      background: #eaf6ff;
       color: #13324b;
+      padding: 8px 16px;
+      border-radius: 8px;
       text-decoration: none;
       font-weight: 500;
-      border: 1px solid #9fcbe8;
-      padding: 6px 12px;
-      border-radius: 8px;
       transition: 0.3s;
     }
 
@@ -86,20 +102,24 @@
       color: white;
     }
 
-    .shops {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 30px;
+    /* بطاقات المتاجر */
+    .shops-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 40px auto;
+      max-width: 1000px;
     }
 
     .shop-card {
-      background: #f7fbff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
       text-align: center;
-      padding: 20px;
-      transition: transform 0.3s;
+      width: 180px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
     }
 
     .shop-card:hover {
@@ -107,57 +127,31 @@
     }
 
     .shop-card img {
-      max-width: 100%;
-      height: 70px;
+      width: 100%;
+      height: 100px;
       object-fit: contain;
       margin-bottom: 10px;
     }
 
-    .shop-card h3 {
-      margin: 10px 0;
-      font-size: 18px;
-      color: #13324b;
-    }
-
     .shop-card a {
-      display: inline-block;
-      margin-top: 8px;
-      background: #4da3ff;
+      background: #9fcbe8;
       color: white;
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 6px;
       text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .shop-card a:hover {
-      background: #3b8ae0;
-    }
-
-    input[type="text"] {
-      display: block;
-      margin: 20px auto;
-      padding: 10px;
-      width: 80%;
-      max-width: 300px;
-      border: 1px solid #9fcbe8;
-      border-radius: 6px;
-      font-size: 15px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
-  <!-- ===== الهيدر ===== -->
   <header>
-    <div class="logo">Viarra</div>
-    <div class="welcome-text" id="welcome"></div>
-
+    <div>
+      <div class="logo">Viarra</div>
+      <div class="welcome-text" id="welcome"></div>
+    </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -165,8 +159,11 @@
     </nav>
   </header>
 
-  <!-- ===== البحث والفئات ===== -->
-  <input type="text" id="cityInput" placeholder="ابحث باسم المدينة..." />
+  <div class="search-box">
+    <input type="text" id="cityInput" placeholder="ابحث باسم المدينة..." />
+  </div>
+
+  <div class="menu-icon" id="menuBtn">☰ التصنيفات</div>
 
   <div class="categories" id="categoriesMenu">
     <a href="#" data-category="all">عرض الكل</a>
@@ -176,23 +173,18 @@
     <a href="#" data-category="accessories">إكسسوارات</a>
   </div>
 
-  <!-- ===== المتاجر ===== -->
-  <div class="shops" id="shopsContainer"></div>
+  <div class="shops-container" id="shopsContainer"></div>
 
   <script>
-    const shopsContainer = document.getElementById("shopsContainer");
-    const cityInput = document.getElementById("cityInput");
-    const categoriesMenu = document.getElementById("categoriesMenu");
-
-    const shops = [{ name: "Dior", img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Dior_Logo.svg", category: "clothes", city: ["جدة","الرياض"], link: "https://www.dior.com" },
-      { name: "Chanel", img: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Chanel_logo_interlocking_cs.svg", category: "perfume", city: ["الرياض","الدمام"], link: "https://www.chanel.com" },
+    // المتاجر (بما فيها تبوك)
+    const shops = [
+      { name: "Dior", img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Dior_Logo.svg", category: "clothes", city: ["جدة","الرياض"], link: "https://www.dior.com" },
+      { name: "Chanel", img: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Chanel_logo_interlocking_cs. svg", category: "perfume", city: ["الرياض","الدمام"], link: "https://www.chanel.com" },
       { name: "ZARA", img: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Zara_Logo.svg", category: "clothes", city: ["جدة","الرياض"], link: "https://www.zara.com" },
       { name: "Gucci", img: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Gucci_logo.svg", category: "bags", city: ["الرياض"], link: "https://www.gucci.com" },
       { name: "Swarovski", img: "https://upload.wikimedia.org/wikipedia/commons/b/bf/Swarovski_logo.svg", category: "accessories", city: ["جدة","الرياض"], link: "https://www.swarovski.com" },
       { name: "Cartier", img: "https://upload.wikimedia.org/wikipedia/commons/3/31/Cartier_logo.svg", category: "accessories", city: ["الرياض","المدينة"], link: "https://www.cartier.com" },
       { name: "Tiffany & Co", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Tiffany_%26_Co._logo.svg", category: "accessories", city: ["الرياض","الخبر"], link: "https://www.tiffany.com" },
-
-      /* ===== متاجر تبوك ===== */
       { name: "Rina", img: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Rina_Fashion_logo.svg", category: "clothes", city: ["تبوك"], link: "https://www.rinafashion.com" },
       { name: "Faces", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Faces_Beauty_Stores_logo.svg", category: "perfume", city: ["تبوك"], link: "https://www.faces.com" },
       { name: "Splash", img: "https://upload.wikimedia.org/wikipedia/commons/7/7c/Splash_Fashions_logo.svg", category: "clothes", city: ["تبوك"], link: "https://www.splashfashions.com" },
@@ -201,6 +193,12 @@
       { name: "Centrepoint", img: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Centrepoint_logo.svg", category: "clothes", city: ["تبوك"], link: "https://www.centrepointstores.com" }
     ];
 
+    const shopsContainer = document.getElementById("shopsContainer");
+    const cityInput = document.getElementById("cityInput");
+    const menuBtn = document.getElementById("menuBtn");
+    const categoriesMenu = document.getElementById("categoriesMenu");
+
+    // عرض المتاجر
     function renderShops(list) {
       shopsContainer.innerHTML = "";
       list.forEach(shop => {
@@ -217,16 +215,25 @@
 
     renderShops(shops);
 
+    // البحث حسب المدينة
     cityInput.addEventListener("input", (e) => {
       const value = e.target.value.trim();
       if (value === "") {
         renderShops(shops);
         return;
       }
-      const filtered = shops.filter(s => s.city.includes(value));
+      const norm = (s) => s.replace(/\s+/g, "").replace(/[أإآا]/g, "ا").toLowerCase();
+      const target = norm(value);
+      const filtered = shops.filter(s => s.city.some(c => norm(c) === target));
       renderShops(filtered);
     });
 
+    // القائمة المنسدلة
+    menuBtn.addEventListener("click", () => {
+      categoriesMenu.classList.toggle("active");
+    });
+
+    // تصفية حسب التصنيف
     document.querySelectorAll(".categories a").forEach(btn => {
       btn.addEventListener("click", e => {
         e.preventDefault();
@@ -237,15 +244,9 @@
       });
     });
 
-    // ===== الترحيب بالمستخدم =====
-    const username = localStorage.getItem("username");
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-    if (!isLoggedIn) {
-      window.location.href = "login.html";
-    } else {
-      document.getElementById("welcome").textContent =' مرحبًا بك  ${username} 🌸';
-    }
+    // الترحيب بالمستخدم
+    const username = localStorage.getItem("username") || "زائر";
+    document.getElementById("welcome").textContent =' مرحبًا بك، ${username} 🌸';
   </script>
 </body>
 </html>
