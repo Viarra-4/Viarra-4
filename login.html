@@ -5,29 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>تسجيل الدخول - Viarra</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: url("bg-viarra.png") center/cover no-repeat;
+      color: #fff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      width: 320px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .btn {
+      padding: 10px 25px;
+      background: #4da3ff;
+      color: white;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background: #3b8ae0;
+    }
+    .small {
+      font-size: 13px;
+      margin-top: 10px;
+      color: #ddd;
+    }
+  </style>
 </head>
 <body>
-  <section class="login-page">
-    <h2>تسجيل الدخول</h2>
-    <form id="loginForm">
-      <label>اسم المستخدم</label>
-      <input type="text" required />
-
-      <label>رقم الجوال</label>
-      <input type="tel" required />
-
-      <button type="submit">تسجيل الدخول</button>
-    </form>
-    <p>ليس لديك حساب؟ <a href="register.html">إنشاء حساب</a></p>
+  <section class="hero">
+    <div class="form-box">
+      <h2>تسجيل الدخول</h2>
+      <input type="text" id="phone" placeholder="رقم الجوال (مثل 0500000000)" />
+      <input type="password" id="password" placeholder="كلمة المرور" />
+      <button class="btn" onclick="login()">دخول</button>
+      <p class="small">ليس لديك حساب؟ <a href="register.html">إنشاء حساب</a></p>
+    </div>
   </section>
 
   <script>
-    const form = document.getElementById("loginForm");
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      // بعد تسجيل الدخول ينتقل تلقائيًا إلى صفحة المتاجر
+    function login() {
+      const phone = document.getElementById("phone").value.trim();
+      const password = document.getElementById("password").value.trim();
+      
+      const savedPhone = localStorage.getItem("userPhone");
+      const savedPassword = localStorage.getItem("password");
+
+      if (phone === "" || password === "") {
+        alert("⚠️ الرجاء إدخال جميع البيانات");
+        return;
+      }
+
+      if (phone === savedPhone || "+966" + phone.slice(1) === savedPhone) {
+        if (password === savedPassword) {
+          alert("✅ تم تسجيل الدخول بنجاح!");
+          localStorage.setItem("isLoggedIn", true);
+          window.location.href = "shops.html";
+        } else {
+          alert("❌ كلمة المرور غير صحيحة");
+        }
+      } else {
+        alert("❌ رقم الجوال غير مسجل");
+      }
+    }
+
+    // لو المستخدم داخل مسبقًا، نوديه مباشرة للمتاجر
+    if (localStorage.getItem("isLoggedIn") === "true") {
       window.location.href = "shops.html";
-    });
+    }
   </script>
 </body>
 </html>
